@@ -46,9 +46,15 @@ const del = () => {
         .then((response) => renderOutput(response))
 }
 
-
+// METHOD GET PARA PEGAR MAIS DE UM DADO NA API
 const multiple = () => {
-    console.log('multiple');
+    Promise.all([
+        axios.get('https://jsonplaceholder.typicode.com/posts?limit=5'),
+        axios.get('https://jsonplaceholder.typicode.com/users?limit=5')
+    ]).then((response) => {
+        console.table(response[0].data);
+        console.table(response[1].data);
+    });
 }
 
 const transform = () => {
