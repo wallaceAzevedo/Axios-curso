@@ -56,17 +56,15 @@ const multiple = () => {
     });
 }
 
-
-// pega a resposta da api e adiciona o que eu quiser no final de cada objeto, na linha 67 pegamos a resposta da api mapeamos, pegamos o ibj e adicionamos no final o que quisermos, isso vai ser retornado no front.
 const transform = () => {
     const config = {
         params: {
             _limit: 5
         },
         transformResponse: [function (data) {
-            const payload = JSON.parse(data).map(obj => {
+            const payload = JSON.parse(data).map(o => {
                 return {
-                    ...obj,
+                    ...o,
                     first_name: 'Jon',
                     last_name: 'Snow',
                     full_name: 'Jon Snow',
@@ -81,7 +79,9 @@ const transform = () => {
 }
 
 const errorHandling = () => {
-    console.log('errorHandling');
+    axios.get('https://jsonplaceholder.typicode.com/postsz')
+        .then((response) => renderOutput(response))
+        .catch((error) => renderOutput(error.response));
 }
 
 const cancel = () => {
