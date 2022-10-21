@@ -46,7 +46,6 @@ const del = () => {
         .then((response) => renderOutput(response))
 }
 
-// METHOD GET PARA PEGAR MAIS DE UM DADO NA API
 const multiple = () => {
     Promise.all([
         axios.get('https://jsonplaceholder.typicode.com/posts?limit=5'),
@@ -57,8 +56,28 @@ const multiple = () => {
     });
 }
 
+
+// pega a resposta da api e adiciona o que eu quiser no final de cada objeto, na linha 67 pegamos a resposta da api mapeamos, pegamos o ibj e adicionamos no final o que quisermos, isso vai ser retornado no front.
 const transform = () => {
-    console.log('transform');
+    const config = {
+        params: {
+            _limit: 5
+        },
+        transformResponse: [function (data) {
+            const payload = JSON.parse(data).map(obj => {
+                return {
+                    ...obj,
+                    first_name: 'Jon',
+                    last_name: 'Snow',
+                    full_name: 'Jon Snow',
+                }
+            });
+
+            return payload;
+        }],
+    };
+    axios.get('https://jsonplaceholder.typicode.com/posts', config)
+        .then((response) => renderOutput(response))
 }
 
 const errorHandling = () => {
